@@ -177,7 +177,6 @@ public class Maze3d {
         }
         return  temp;
     }
-
     public byte[] toByteArray() {
         List<Byte> list = new ArrayList<Byte>();
         int index = 0;
@@ -192,20 +191,28 @@ public class Maze3d {
                     index++;
                 }
         index = 0;
+        list.add((byte) mHeight);
+        list.add((byte) fHeight);
+        list.add((byte) fWidth);
         while (index < mHeight * fHeight * fWidth) {
-            if ((arr.length < index) == false)
-                break;
+
             while (arr[index] == 1) {
                 counterOne++;
                 index++;
+                if (index >= arr.length)
+                    break;
             }
             list.add(counterOne);
             list.add((byte) 1);
             counterOne = 0;
+            if (index >= arr.length)
+                break;
             if (index < mHeight * fHeight * fWidth) {
                 while (arr[index] == 0) {
                     counterZero++;
                     index++;
+                    if (index >= arr.length)
+                        break;
                 }
                 list.add(counterZero);
                 list.add((byte) 0);
@@ -214,9 +221,17 @@ public class Maze3d {
 
 
         }
-        return null;
+        byte[] finalArr = new byte[list.size()];
+        index = 0;
+        for (Byte b : list) {
+            finalArr[index] = b;
+            index++;
+
+        }
+
+        return finalArr;
     }
 
-    public Maze3d(Byte[] bytesArray) {
+    public Maze3d(byte[] bytesArray) {
     }
 }
