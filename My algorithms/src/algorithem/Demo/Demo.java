@@ -10,7 +10,7 @@ import static mazeGenerators.Maze3dGenerator.ANSI_CYAN;
 import static mazeGenerators.Maze3dGenerator.ANSI_RESET;
 
 /**
- * Created by orrko_0000000000 on 02/09/2016.
+ * Created by orrko_000000000000000000 on 02/09/2016.
  */
 public class Demo {
 
