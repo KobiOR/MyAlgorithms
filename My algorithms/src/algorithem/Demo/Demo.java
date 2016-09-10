@@ -9,16 +9,13 @@ import static Run.Methods.print;
 import static mazeGenerators.Maze3dGenerator.ANSI_CYAN;
 import static mazeGenerators.Maze3dGenerator.ANSI_RESET;
 
-/**
- * Created by orrko_000000000000000000 on 02/09/2016.
- */
 public class Demo {
 
 
     public static void run(){
 
         SimpleMaze3dGenerator SMG = new SimpleMaze3dGenerator();
-        Maze3d myMaze = SMG.Generate(2, 9, 11);
+        Maze3d myMaze = SMG.Generate(4, 15, 22);
         boolean a = SMG.verityPathOnMaze(myMaze);
         System.out.print(ANSI_CYAN + a + "\n" + ANSI_RESET);
         myMaze.printMaze();
