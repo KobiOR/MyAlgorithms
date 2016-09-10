@@ -124,4 +124,9 @@ public class Coordinate {
       public String toString() {
             return getCoodinate();
       }
+
+      public byte[] toByteArray() {
+
+            return new byte[]{(byte) cMazeHeight, (byte) cFloorHeight, (byte) cFloorWidth};
+      }
 }

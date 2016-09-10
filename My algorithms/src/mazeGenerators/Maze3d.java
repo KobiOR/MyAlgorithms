@@ -3,6 +3,8 @@ package mazeGenerators;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.sun.org.apache.xalan.internal.xsltc.compiler.sym.error;
+import static jdk.nashorn.internal.objects.Global.print;
 import static mazeGenerators.Maze3dGenerator.*;
 
 /**
@@ -176,4 +178,45 @@ public class Maze3d {
         return  temp;
     }
 
+    public byte[] toByteArray() {
+        List<Byte> list = new ArrayList<Byte>();
+        int index = 0;
+        byte counterZero = 0;
+        byte counterOne = 0;
+        Byte[] arr = new Byte[mHeight * fHeight * fWidth];
+        for (int i = 0; i < mHeight; i++)
+            for (int j = 0; j < fHeight; j++)
+                for (int k = 0; k < fWidth; k++) {
+                    if (maze3d[i][j][k] == 1) arr[index] = 1;
+                    else if (maze3d[i][j][k] == 0) arr[index] = 0;
+                    index++;
+                }
+        index = 0;
+        while (index < mHeight * fHeight * fWidth) {
+            if ((arr.length < index) == false)
+                break;
+            while (arr[index] == 1) {
+                counterOne++;
+                index++;
+            }
+            list.add(counterOne);
+            list.add((byte) 1);
+            counterOne = 0;
+            if (index < mHeight * fHeight * fWidth) {
+                while (arr[index] == 0) {
+                    counterZero++;
+                    index++;
+                }
+                list.add(counterZero);
+                list.add((byte) 0);
+                counterZero = 0;
+            }
+
+
+        }
+        return null;
+    }
+
+    public Maze3d(Byte[] bytesArray) {
+    }
 }
