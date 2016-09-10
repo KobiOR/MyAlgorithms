@@ -1,0 +1,24 @@
+package mazeGenerators;
+
+/**
+ * Created by orrko_000 on 07/08/2016.
+ */
+public interface Maze3dGenerator
+{
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_BLACK = "\u001B[30m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_CYAN = "\u001B[36m";
+    public static final String ANSI_WHITE = "\u001B[37m";
+    public static final String ANSI_BOLD = "\033[1m";
+    public static final String ANSI_BOLD_END = "\033[0m";
+
+
+    Maze3d Generate(int x,int y,int z);
+    String measureAlgorithmTime(int x,int y,int z);
+
+}
