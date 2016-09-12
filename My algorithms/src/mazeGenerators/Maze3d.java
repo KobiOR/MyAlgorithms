@@ -1,7 +1,9 @@
 package mazeGenerators;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 import static com.sun.org.apache.xalan.internal.xsltc.compiler.sym.error;
 import static jdk.nashorn.internal.objects.Global.print;
@@ -14,24 +16,30 @@ public class Maze3d {
 
     int[][][] maze3d;
     private Coordinate entry, exit;
-    private int  mHeight,fHeight,fWidth;
+    private int mHeight, fHeight, fWidth;
 
     public Maze3d(Maze3d myMaze) {
-        this.mHeight=myMaze.getmHeight();
-        this.fHeight=myMaze.getfHeight();
-        this.fWidth=myMaze.getfWidth();
+        this.mHeight = myMaze.getmHeight();
+        this.fHeight = myMaze.getfHeight();
+        this.fWidth = myMaze.getfWidth();
 
-        this.maze3d=new int[mHeight][fHeight][fWidth];
+        this.maze3d = new int[mHeight][fHeight][fWidth];
 
-        for (int i = 0; i <mHeight ; i++)
-            for (int j = 0; j <fHeight ; j++)
-                for (int k = 0; k <fWidth ; k++)
-                    this.maze3d[i][j][k]=myMaze.maze3d[i][j][k];
-        this.entry=new Coordinate(myMaze.getEntry());
-        this.exit=new Coordinate(myMaze.getExit());
+        for (int i = 0; i < mHeight; i++)
+            for (int j = 0; j < fHeight; j++)
+                for (int k = 0; k < fWidth; k++)
+                    this.maze3d[i][j][k] = myMaze.maze3d[i][j][k];
+        this.entry = new Coordinate(myMaze.getEntry());
+        this.exit = new Coordinate(myMaze.getExit());
 
 
     }
+
+    public Maze3d() {
+
+    }
+
+
     public int getmHeight() {
         return mHeight;
     }
@@ -50,46 +58,52 @@ public class Maze3d {
     public void setfWidth(int fWidth) {
         this.fWidth = fWidth;
     }
-    public Maze3d() {}
     public Maze3d(int mHeight, int floorHeight, int floorWidth) {
-        createMaze(mHeight, floorHeight,floorWidth);
+        createMaze(mHeight, floorHeight, floorWidth);
     }
     public Coordinate getEntry() {
         return entry;
     }
     public void setEntry(Coordinate COOR) {
         this.entry = COOR;
-        setValueByCoor(COOR,0);
+        setValueByCoor(COOR, 0);
 
     }
     public Coordinate getExit() {
         return exit;
     }
-    public void setExit(Coordinate COOR)    {
+
+    public void setExit(Coordinate COOR) {
         this.exit = COOR;
-        setValueByCoor(COOR,0);
+        setValueByCoor(COOR, 0);
     }
-    public void createMaze(int mazeHeight, int floorHeight, int floorWidth){
-        mHeight = 2*mazeHeight+1;
+
+    public void createMaze(int mazeHeight, int floorHeight, int floorWidth) {
+        mHeight = 2 * mazeHeight + 1;
         fHeight = floorHeight;
         fWidth = floorWidth;
         maze3d = new int[mHeight][fHeight][fWidth];
 
     }
+
     public void printMaze() {
         for (int i = 0; i < mHeight; i++) {
-            for (int j = 0; j < fHeight; j++){
+            for (int j = 0; j < fHeight; j++) {
                 for (int z = 0; z < fWidth; z++) {
-                    if (maze3d[i][j][z]==1)
-                    {
-                         System.out.print("\033[1m" +maze3d[i][j][z]+ "\033[0m");
-                    }
-                    else
-                    {
-                        if (entry.sameCoors(i,j,z)){System.out.print("\033[1m"+ANSI_GREEN +maze3d[i][j][z] +ANSI_RESET+ "\033[0m");continue;}
-                        if (exit.sameCoors(i,j,z)){System.out.print("\033[1m"+ANSI_RED +maze3d[i][j][z] +ANSI_RESET+ "\033[0m");continue;}
-                        if (i%2==0 && maze3d[i][j][z]==0){System.out.print("\033[1m"+ANSI_BLUE +maze3d[i][j][z] +ANSI_RESET+ "\033[0m");}
-                           else System.out.print(maze3d[i][j][z]);
+                    if (maze3d[i][j][z] == 1) {
+                        System.out.print("\033[1m" + maze3d[i][j][z] + "\033[0m");
+                    } else {
+                        if (entry.sameCoors(i, j, z)) {
+                            System.out.print("\033[1m" + ANSI_GREEN + maze3d[i][j][z] + ANSI_RESET + "\033[0m");
+                            continue;
+                        }
+                        if (exit.sameCoors(i, j, z)) {
+                            System.out.print("\033[1m" + ANSI_RED + maze3d[i][j][z] + ANSI_RESET + "\033[0m");
+                            continue;
+                        }
+                        if (i % 2 == 0 && maze3d[i][j][z] == 0) {
+                            System.out.print("\033[1m" + ANSI_BLUE + maze3d[i][j][z] + ANSI_RESET + "\033[0m");
+                        } else System.out.print(maze3d[i][j][z]);
                     }
                 }
                 System.out.print("\n");
@@ -97,35 +111,48 @@ public class Maze3d {
             System.out.print("\n");
         }
     }
-    public void setWall(int mazeHeight, int floorHeight, int floorWidth){
-        if (mazeHeight<mHeight&&floorHeight<fHeight&& floorWidth<fWidth)
-            maze3d[mazeHeight][floorHeight][floorWidth]=1;
+
+    public void setWall(int mazeHeight, int floorHeight, int floorWidth) {
+        if (mazeHeight < mHeight && floorHeight < fHeight && floorWidth < fWidth)
+            maze3d[mazeHeight][floorHeight][floorWidth] = 1;
         else System.out.print("Cant set wall\n");
 
     }
-    public void removeWall(int mazeHeight, int floorHeight, int floorWidth){
-        if (mazeHeight<mHeight&&floorHeight<fHeight&& floorWidth<fWidth)
-            maze3d[mazeHeight][floorHeight][floorWidth]=0;
+
+    public void removeWall(int mazeHeight, int floorHeight, int floorWidth) {
+        if (mazeHeight < mHeight && floorHeight < fHeight && floorWidth < fWidth)
+            maze3d[mazeHeight][floorHeight][floorWidth] = 0;
         else System.out.print("Cant remove wall\n");
     }
-    public void setValueByCoor(Coordinate coor,int value){
-          maze3d[coor.cMazeHeight][coor.cFloorHeight][coor.cFloorWidth]=value;
+
+    public void setValueByCoor(Coordinate coor, int value) {
+        maze3d[coor.cMazeHeight][coor.cFloorHeight][coor.cFloorWidth] = value;
 
     }
-    public int getValueByCoor(Coordinate coor){
-           return maze3d[coor.cMazeHeight][coor.cFloorHeight][coor.cFloorWidth];
-            }
-    public boolean WallExist(Coordinate coors){
 
-       if(coors.cMazeHeight<0|| coors.cFloorHeight<0||coors.cFloorWidth<0){return true;}
-       if(coors.cMazeHeight>=mHeight || coors.cFloorHeight>=fHeight||coors.cFloorWidth>=fWidth){return true;}
-       if(maze3d[coors.cMazeHeight][coors.cFloorHeight][coors.cFloorWidth]==0) return false;
-       if(getValueByCoor(coors)==1){return true;}
-       else {return true;}
+    public int getValueByCoor(Coordinate coor) {
+        return maze3d[coor.cMazeHeight][coor.cFloorHeight][coor.cFloorWidth];
+    }
+
+    public boolean WallExist(Coordinate coors) {
+
+        if (coors.cMazeHeight < 0 || coors.cFloorHeight < 0 || coors.cFloorWidth < 0) {
+            return true;
+        }
+        if (coors.cMazeHeight >= mHeight || coors.cFloorHeight >= fHeight || coors.cFloorWidth >= fWidth) {
+            return true;
+        }
+        if (maze3d[coors.cMazeHeight][coors.cFloorHeight][coors.cFloorWidth] == 0) return false;
+        if (getValueByCoor(coors) == 1) {
+            return true;
+        } else {
+            return true;
+        }
 
 
     }
-    public String[] getPossibleMoves(Coordinate coors){
+
+    public String[] getPossibleMoves(Coordinate coors) {
 
         List<String> moveString = new ArrayList<>();
         if (!WallExist(coors.STRAIGHT())) moveString.add("Straight");
@@ -135,48 +162,53 @@ public class Maze3d {
         if (!WallExist(coors.UP())) moveString.add("Up");
         if (!WallExist(coors.DOWN())) moveString.add("Down");
 
-        String[] myMoves=new String[moveString.size()];
-        for (int i = 0; i <moveString.size() ; i++) {
-            myMoves[i]=moveString.get(i);
+        String[] myMoves = new String[moveString.size()];
+        for (int i = 0; i < moveString.size(); i++) {
+            myMoves[i] = moveString.get(i);
         }
         return myMoves;
 
     }
+
     public String getGoalPosition() {
-        String str=getEntry().getCoodinate();
-        str+=" "+getExit().getCoodinate();
+        String str = getEntry().getCoodinate();
+        str += " " + getExit().getCoodinate();
         return str;
     }
+
     public int[][] getCrossSectionByX(int i) {
-        int[][] temp=new int[fHeight][fWidth];
+        int[][] temp = new int[fHeight][fWidth];
         for (int j = 0; j < fHeight; j++) {
-            for (int k = 0; k <fWidth ; k++)
-                temp[j][k]=maze3d[i][j][k];
+            for (int k = 0; k < fWidth; k++)
+                temp[j][k] = maze3d[i][j][k];
 
 
         }
-        return  temp;
+        return temp;
     }
+
     public int[][] getCrossSectionByY(int i) {
-        int[][] temp=new int[mHeight][fWidth];
+        int[][] temp = new int[mHeight][fWidth];
         for (int j = 0; j < mHeight; j++) {
-            for (int k = 0; k <fWidth ; k++)
-                temp[j][k]=maze3d[j][i][k];
+            for (int k = 0; k < fWidth; k++)
+                temp[j][k] = maze3d[j][i][k];
 
 
         }
-        return  temp;
+        return temp;
     }
-    public int[][] getCrossSectionByZ(int i){
-        int[][] temp=new int[mHeight][fHeight];
+
+    public int[][] getCrossSectionByZ(int i) {
+        int[][] temp = new int[mHeight][fHeight];
         for (int j = 0; j < mHeight; j++) {
-            for (int k = 0; k <fHeight ; k++)
-                temp[j][k]=maze3d[j][k][i];
+            for (int k = 0; k < fHeight; k++)
+                temp[j][k] = maze3d[j][k][i];
 
 
         }
-        return  temp;
+        return temp;
     }
+
     public byte[] toByteArray() {
         List<Byte> list = new ArrayList<Byte>();
         int index = 0;
@@ -194,6 +226,12 @@ public class Maze3d {
         list.add((byte) mHeight);
         list.add((byte) fHeight);
         list.add((byte) fWidth);
+        list.add((byte) entry.cMazeHeight);
+        list.add((byte) entry.cFloorHeight);
+        list.add((byte) entry.cFloorWidth);
+        list.add((byte) exit.cMazeHeight);
+        list.add((byte) exit.cFloorHeight);
+        list.add((byte) exit.cFloorWidth);
         while (index < mHeight * fHeight * fWidth) {
 
             while (arr[index] == 1) {
@@ -232,6 +270,48 @@ public class Maze3d {
         return finalArr;
     }
 
-    public Maze3d(byte[] bytesArray) {
+    public Maze3d(byte[] b) {
+        mHeight = b[0];
+        fHeight = b[1];
+        fWidth = b[2];
+        maze3d = new int[mHeight][fHeight][fWidth];
+        entry = new Coordinate(b[3], b[4], b[5]);
+        exit = new Coordinate(b[6], b[7], b[8]);
+        int status = 9;
+        Queue<Integer> queue = new LinkedList<Integer>();
+        while (status < b.length) {
+            if (status >= b.length)
+                break;
+            for (int i = 0; i < b[status]; i++) {
+                queue.add((int) b[status + 1]);
+            }
+            status += 2;
+        }
+
+        for (int i = 0; i < mHeight; i++)
+            for (int j = 0; j < fHeight; j++)
+                for (int k = 0; k < fWidth; k++) {
+                    maze3d[i][j][k] = queue.poll();
+                }
+
+
+        if (!queue.isEmpty())
+            print("Queue is not emptey!\n");
+
+    }
+
+    public boolean equal(Maze3d maze) {
+        if (mHeight != maze.getmHeight() || fHeight != maze.getfHeight() || fWidth != maze.getfWidth())
+            return false;
+        for (int i = 0; i < mHeight; i++)
+            for (int j = 0; j < fHeight; j++)
+                for (int k = 0; k < fWidth; k++) {
+                    if (maze3d[i][j][k] != maze.maze3d[i][j][k])
+                        return false;
+                }
+
+        if (!(entry.equals(maze.getEntry()) && exit.equals(maze.getExit())))
+            return false;
+        return true;
     }
 }
