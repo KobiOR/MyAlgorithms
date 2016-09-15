@@ -14,7 +14,7 @@ public class Demo {
 
     public static void run() {
         SimpleMaze3dGenerator SMG = new SimpleMaze3dGenerator();
-        Maze3d myMaze = new SimpleMaze3dGenerator().Generate(2, 4, 4);
+        Maze3d myMaze = new SimpleMaze3dGenerator().Generate(4, 8, 8);
         if (SMG.verityPathOnMaze(myMaze)) print("True");
         else print("False");
 
@@ -23,13 +23,13 @@ public class Demo {
             OutputStream out = new MyCompressorOutputStream(new FileOutputStream("test.maz"));
             out.write(myMaze.toByteArray());
             InputStream in = new MyDecompressorInputStream(new DataInputStream(new FileInputStream("test.maz")));
-            byte b[] = new byte[myMaze.toByteArray().length];
+            byte[] b = new byte[(int) new File("test.maz").length()];
             in.read(b);
             in.close();
             Maze3d loaded = new Maze3d(b);
             if (loaded.equal(myMaze))
-                print("True!!!!");
-
+                print("True!!!!\n");
+            System.out.print(loaded.getMazeString());
 
         } catch (UnsupportedEncodingException e) {
             System.out.println(e.getMessage());

@@ -314,4 +314,32 @@ public class Maze3d {
             return false;
         return true;
     }
+
+    public String getMazeString() {
+        String st = new String();
+        for (int i = 0; i < mHeight; i++) {
+            for (int j = 0; j < fHeight; j++) {
+                for (int z = 0; z < fWidth; z++) {
+                    if (maze3d[i][j][z] == 1) {
+                        st += "\033[1m" + maze3d[i][j][z] + "\033[0m";
+                    } else {
+                        if (entry.sameCoors(i, j, z)) {
+                            st += "\033[1m" + ANSI_GREEN + maze3d[i][j][z] + ANSI_RESET + "\033[0m";
+                            continue;
+                        }
+                        if (exit.sameCoors(i, j, z)) {
+                            st += "\033[1m" + ANSI_RED + maze3d[i][j][z] + ANSI_RESET + "\033[0m";
+                            continue;
+                        }
+                        if (i % 2 == 0 && maze3d[i][j][z] == 0) {
+                            st += "\033[1m" + ANSI_BLUE + maze3d[i][j][z] + ANSI_RESET + "\033[0m";
+                        } else st += maze3d[i][j][z];
+                    }
+                }
+                st += "\n";
+            }
+            st += "\n";
+        }
+        return st;
+    }
 }
