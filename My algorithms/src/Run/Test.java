@@ -9,6 +9,7 @@ public class Test {
     public static void main(String[] args) {
 
         run();
+        System.exit(0);
     }
 
 }

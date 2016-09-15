@@ -237,7 +237,7 @@ public class Maze3d {
             while (arr[index] == 1) {
                 counterOne++;
                 index++;
-                if (index >= arr.length)
+                if (index >= arr.length || counterOne > 100)
                     break;
             }
             list.add(counterOne);
@@ -249,7 +249,7 @@ public class Maze3d {
                 while (arr[index] == 0) {
                     counterZero++;
                     index++;
-                    if (index >= arr.length)
+                    if (index >= arr.length || counterZero > 100)
                         break;
                 }
                 list.add(counterZero);
@@ -314,7 +314,6 @@ public class Maze3d {
             return false;
         return true;
     }
-
     public String getMazeString() {
         String st = new String();
         for (int i = 0; i < mHeight; i++) {
@@ -341,5 +340,9 @@ public class Maze3d {
             st += "\n";
         }
         return st;
+    }
+
+    public static int unsignedToBytes(byte b) {
+        return b & 0xFF;
     }
 }
