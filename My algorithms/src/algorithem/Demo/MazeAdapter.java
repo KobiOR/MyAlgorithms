@@ -30,25 +30,30 @@ public class MazeAdapter implements Searchable<Coordinate> {
     @Override
     public List<State<Coordinate>> getAllPossibleStates(State<Coordinate> s)    {
         List<State<Coordinate>> movesList=new ArrayList<State<Coordinate>>();
-        if (!myMaze.WallExist(s.getValue().UP())){myMaze.setValueByCoor(s.getValue().UP(),1);
+        if (!myMaze.WallExist(s.getValue().UP())) {
             movesList.add(new State<Coordinate>(s.getValue().UP()));}
 
-        if (!myMaze.WallExist(s.getValue().DOWN())){myMaze.setValueByCoor(s.getValue().DOWN(),1);
+        if (!myMaze.WallExist(s.getValue().DOWN())) {
             movesList.add(new State<Coordinate>(s.getValue().DOWN()));}
 
-        if (!myMaze.WallExist(s.getValue().LEFT())){myMaze.setValueByCoor(s.getValue().LEFT(),1);
+        if (!myMaze.WallExist(s.getValue().LEFT())) {
             movesList.add(new State<Coordinate>(s.getValue().LEFT()));}
 
-        if (!myMaze.WallExist(s.getValue().RIGHT())){myMaze.setValueByCoor(s.getValue().RIGHT(),1);
+        if (!myMaze.WallExist(s.getValue().RIGHT())) {
             movesList.add(new State<Coordinate>(s.getValue().RIGHT()));}
 
-        if (!myMaze.WallExist(s.getValue().BACKWORDS())){myMaze.setValueByCoor(s.getValue().BACKWORDS(),1);
+        if (!myMaze.WallExist(s.getValue().BACKWORDS())) {
             movesList.add(new State<Coordinate>(s.getValue().BACKWORDS()));}
 
-        if (!myMaze.WallExist(s.getValue().STRAIGHT())){myMaze.setValueByCoor(s.getValue().STRAIGHT(),1);
+        if (!myMaze.WallExist(s.getValue().STRAIGHT())) {
             movesList.add(new State<Coordinate>(s.getValue().STRAIGHT()));}
 
         return movesList;
+    }
+
+    @Override
+    public void setValue(State<Coordinate> s) {
+        myMaze.setValueByCoor(s.getValue(), 1);
     }
 
     @Override
@@ -57,4 +62,3 @@ public class MazeAdapter implements Searchable<Coordinate> {
     }
 
 }
-

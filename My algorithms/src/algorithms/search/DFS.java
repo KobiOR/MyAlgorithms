@@ -12,64 +12,53 @@ import java.util.ArrayList;
 
 import java.util.*;
 
-import static Run.Methods.print;
-import static algorithms.search.Color.BLACK;
-import static algorithms.search.Color.GREY;
-import static algorithms.search.Color.WHITE;
-
 /**
  * Created by orrko_000 on 29/08/2016.
  */
-enum Color {
-    WHITE,GREY,BLACK;
 
-}
+public class DFS<T> extends CommonSearcher<T> {
 
-public class DFS<T> extends CommonSearcher {
-
-    HashMap<State<T>, Color> hashMap = new HashMap<State<T>, Color>();
-    Solution<T> solution = new Solution<T>();
-    Stack<State<T>> st = new Stack<State<T>>();
-    List<State<T>> neighbors=new ArrayList<State<T>>();
+    private Random rand = new Random(); // create random number
+    private List<State<T>> statesList = new ArrayList<State<T>>(); // list of solution stateT
+    private List<State<T>> statesMade = new ArrayList<State<T>>(); // list of made states
     @Override
-    public Solution<T> search(Searchable s) {
+    public Solution search(Searchable s) { // method to find solution for a search-able type using depth first search
+        State<T> startState = s.getStartState();
+        statesList.add(startState); // add the start state to the list
+        statesMade.add(startState);
+        DFS(startState, s);   // recursively using depth first search
+        Solution<T> sol = new Solution<T>();
+        sol.setStates(statesList);   // set the solution
+        return sol;
+    }
 
-        st.push(s.getStartState());
-        while(!st.isEmpty())
-        {
-            State<T> state=st.pop();
-            hashMap.put(state,GREY);
-            if (state.getValue().equals(s.getGoalState().getValue()))
-                return getPath(st);
-            neighbors=s.getAllPossibleStates(state);
-            if (neighbors!=null)
-                for (State <T> sta :neighbors)
-                    if (hashMap.containsKey(sta)==false) {
-                        hashMap.put(sta, WHITE);
-                        st.push(sta);
-                    }
+    private void DFS(State<T> currState, Searchable s) {
+        while (!statesList.isEmpty()) {
 
+            evaluatedNodes++; // add a node when going to a new state
+            List<State<T>> moves = s.getAllPossibleStates(currState); // get the possible moves
+            moves.remove(currState.getCameFrom()); // removes the states we have already been at
+            moves.removeAll(statesMade);
 
-            hashMap.replace(state,GREY,BLACK);
+            if (moves.size() > 0) { // if we got a direction to go to
+                int randomNum = rand.nextInt(moves.size()); // random direction
+                State<T> nextState = moves.get(randomNum); // the next state
+                nextState.setCameFrom(currState); // set who it came from
+                statesList.add(nextState); // add it to the list
+                statesMade.add(nextState);
+                if (nextState.equals(s.getGoalState()))
+                    return;
 
+                else
+                    currState = nextState;
+            } else { //if it is a dead end
+                statesList.remove(currState);
+                if (statesList.size() > 0)
+                    currState = statesList.get(statesList.size() - 1);
+            }
         }
-        return null;
     }
-    @Override
-    public boolean equals(Object obj) {
-        if (!(obj instanceof State))
-            return false;
-        if (obj.equals(this))
-            return true;
-            else return  false;
 
-    }
-    private Solution<T> getPath (Stack<State<T>> st){
-        for (int i = 0; i <st.size() ; i++) {
-            print(st.pop().getValue().toString());
-        }
-            return null;
-    }
 
 
 }

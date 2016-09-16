@@ -9,8 +9,18 @@ public class State<T> implements Comparable<State<T>>
 	private State<T> cameFrom;
 	private double cost;
 	private T value;
-	private boolean visit;
-	
+
+
+    private boolean visit;
+
+    public boolean isVisit() {
+        return visit;
+    }
+
+    public void setVisit(boolean visit) {
+        this.visit = visit;
+    }
+
 	public State<T> getCameFrom() {
 		return cameFrom;
 	}

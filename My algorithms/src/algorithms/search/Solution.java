@@ -25,6 +25,15 @@ public class Solution<T> {
 		String s=toString();
 			print(s);
 	}
+
+	public void addState(State<T> s) {
+		states.add(s);
+	}
+
+	public void setValuesOnMaze(State<T> s) {
+
+
+	}
 }
 
 

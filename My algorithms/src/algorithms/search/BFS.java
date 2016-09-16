@@ -1,60 +1,62 @@
-/**
- * BFS CLASS
- * itarative algorithem
- * @param openList-a QUEUE FOR STATE<T>
- * @param closedList  this is the LIST for the algorithem-USE FOR KNOW WHO IS OUT&IN
- *
- */
 package algorithms.search;
+
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.PriorityQueue;
-import java.util.Set;
 
-public class BFS<T> extends CommonSearcher {
 
-	private PriorityQueue<State<T>> openList = new PriorityQueue<State<T>>();
-	private Set<State<T>> closedList = new HashSet<State<T>>();
-	
+public class BFS<T> extends CommonSearcher<T> {
+
+
 	@Override
 	public Solution<T> search(Searchable s) {
-		State<T> startState = s.getStartState();
-		openList.add(startState);
+		if (openList == null)
+			openList = new PriorityQueue<State<T>>();
+		openList.add(s.getStartState());
+		State start = s.getStartState();
+		State goal = s.getGoalState();
+		Solution sol = new Solution<T>();
+		HashSet<State<T>> closed = new HashSet<>();
+
+		closed.add(start);
 
 		while (!openList.isEmpty())
 		{
-			State<T> currState = openList.poll();
-			closedList.add(currState);
-			
-			State<T> goalState = s.getGoalState();
-			if (currState.equals(goalState)) {
-				return backTrace(currState);
+			State<T> n = openList.poll();//1
+			evaluatedNodes++;
+			closed.add(n);//2
+			if (n.equals(goal))//3
+			{
+				return back(n, s.getStartState());
 			}
-			
-			List<State<T>> neighbors = s.getAllPossibleStates(currState);
-			for (State<T> neighbor : neighbors) {
-				if (!openList.contains(neighbor) && !closedList.contains(neighbor)) {
-					neighbor.setCameFrom(currState);
-					neighbor.setCost(currState.getCost() + s.getMoveCost(currState, neighbor));
-					openList.add(neighbor);
-				}
-				else {
-					double newPathCost = currState.getCost() + s.getMoveCost(currState, neighbor);
-					if (neighbor.getCost() > newPathCost) {
-						neighbor.setCost(newPathCost);
-						neighbor.setCameFrom(currState);
-						if (!openList.contains(neighbor)) {
-							openList.add(neighbor);
-						} 
-						else { // must notify the priority queue about the change of cost
-							openList.remove(neighbor);
-							openList.add(neighbor);
+			List<State<T>> successors = s.getAllPossibleStates(n); //4
+			s.setValue(n);
+			for (State<T> st : successors) { //5
+				if (!closed.contains(st) && !openList.contains(st)) {
+					st.setCameFrom(n);
+					openList.add(st);
+				} else {
+					if (costCalculator(n) < st.getCost())
+						if (!openList.contains(st)) {
+							st.setCameFrom(n);
+							openList.add(st);
+						} else {
+							openList.poll();//1
+							evaluatedNodes++;
+							st.setCameFrom(n);
+							st.setCost(costCalculator(n));
+							openList.add(st);
 						}
-					}
-				}			
+				}
 			}
 		}
-		return null;
+		return sol;
 	}
 
+	public double costCalculator(State<T> s) {
+		if (s.getCameFrom() == null)
+			return 0;
+		return s.getCost() + 1;
+	}
 }

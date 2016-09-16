@@ -25,4 +25,6 @@ public interface Searchable<T> {
 	 */
 	List<State<T>> getAllPossibleStates(State<T> s);
 	double getMoveCost(State<T> currState, State<T> neighbor);
+
+	void setValue(State<T> s);
 }

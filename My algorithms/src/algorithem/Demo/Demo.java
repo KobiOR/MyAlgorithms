@@ -1,7 +1,12 @@
 package algorithem.Demo;
 
+import algorithms.search.BFS;
+import algorithms.search.DFS;
+import algorithms.search.Solution;
 import io.MyCompressorOutputStream;
 import io.MyDecompressorInputStream;
+import mazeGenerators.Coordinate;
+import mazeGenerators.GrowingTreeGenerator;
 import mazeGenerators.Maze3d;
 import mazeGenerators.SimpleMaze3dGenerator;
 import Run.Methods.*;
@@ -14,9 +19,24 @@ public class Demo {
 
     public static void run() {
         SimpleMaze3dGenerator SMG = new SimpleMaze3dGenerator();
-        Maze3d myMaze = new SimpleMaze3dGenerator().Generate(8, 18, 20);
-        if (SMG.verityPathOnMaze(myMaze)) print("True");
-        else print("False");
+        GrowingTreeGenerator groTreeAlgo = new GrowingTreeGenerator();
+        Maze3d myMaze = myMaze = groTreeAlgo.Generate(3, 7, 9);
+
+        while (!SMG.verityPathOnMaze(myMaze)) {
+            myMaze = groTreeAlgo.Generate(3, 8, 9);
+        }
+        myMaze.printMaze();
+
+        DFS<Coordinate> s2 = new DFS<Coordinate>();// create DFS searcher
+        Solution<Coordinate> sol2 = s2.search(new MazeAdapter(myMaze));// run the search method to get a solution
+        System.out.println("DFS solution:\n" + sol2.toString());// print the solution
+        System.out.println("The number of nodes evaluated: " + s2.getNumberOfNodesEvaluated() + "\n");// print the number of nodes evaluated
+
+        BFS<Coordinate> s1 = new BFS<Coordinate>();// create DFS searcher
+        MazeAdapter mz = new MazeAdapter(myMaze);
+        Solution<Coordinate> sol1 = s1.search(mz);// run the search method to get a solution
+        System.out.println("BFS solution:\n" + sol1.toString());// print the solution
+        System.out.println("The number of nodes evaluated: " + s1.getNumberOfNodesEvaluated() + "\n");// print the number of nodes evaluated
 
         try {
 
@@ -27,8 +47,6 @@ public class Demo {
             in.read(b);
             in.close();
             Maze3d loaded = new Maze3d(b);
-            System.out.print(loaded.getMazeString());
-
             if (loaded.equal(myMaze))
                 print("True!!!!\n");
 
@@ -39,16 +57,7 @@ public class Demo {
         } catch (Exception e) {
             System.out.println("c");
         }
+
+
     }
-
-        //    out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileDir)));
-        //   out.write("1\n");out.write("1");out.write("1");out.write("1");out.write("1");out.write("1");out.write("1");
-        //    out.flush();
-        //   } catch (FileNotFoundException e) {
-        //       e.printStackTrace();
-        //    } catch (IOException e) {
-        //        e.printStackTrace();
-        //    }
-
-
     }

@@ -8,9 +8,10 @@
 package algorithms.search;
 
 import java.util.List;
+import java.util.PriorityQueue;
 
 public abstract class CommonSearcher<T> implements Searcher {
-
+	protected PriorityQueue<State<T>> openList;
 	protected int evaluatedNodes;
 
 	@Override
@@ -28,6 +29,15 @@ public abstract class CommonSearcher<T> implements Searcher {
 			currState = currState.getCameFrom();
 		}
 
+			return sol;
+		}
+
+	public Solution<T> back(State<T> s, State<T> start) {
+		Solution<T> sol = new Solution<T>();
+		while (!s.equals(start)) {
+			sol.addState(s);
+			s = s.getCameFrom();
+		}
 		return sol;
 	}
 
