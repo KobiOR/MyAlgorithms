@@ -13,14 +13,20 @@ import java.util.Random;
 public class Coordinate {
       int cMazeHeight,cFloorHeight,cFloorWidth;
 
+    public Coordinate(String s) {
+        s = s.substring(1, s.length() - 1);
+        String[] str = s.split(",");
+        cMazeHeight = Integer.parseInt(str[0]);
+        cFloorHeight = Integer.parseInt(str[1]);
+        cFloorWidth = Integer.parseInt(str[2]);
+    }
+
       public boolean isVisited() {
             return visited;
       }
-
       public void setVisited(boolean visited) {
             this.visited = visited;
       }
-
       private boolean visited;
 
 
@@ -124,7 +130,6 @@ public class Coordinate {
       public String toString() {
             return getCoodinate();
       }
-
       public byte[] toByteArray() {
 
             return new byte[]{(byte) cMazeHeight, (byte) cFloorHeight, (byte) cFloorWidth};

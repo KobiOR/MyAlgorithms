@@ -18,9 +18,10 @@ public abstract class CommonSearcher<T> implements Searcher {
 	    public int getNumberOfNodesEvaluated() {
 		return evaluatedNodes;
 	}
-		protected Solution<T> backTrace(State<T> goalState) {
+
+
+    protected Solution<T> backTrace(State<T> goalState) {
 		Solution<T> sol = new Solution<T>();
-		
 		State<T> currState = goalState;
 		List<State<T>> states = sol.getStates();
 		while (currState != null) {
@@ -32,13 +33,14 @@ public abstract class CommonSearcher<T> implements Searcher {
 			return sol;
 		}
 
-	public Solution<T> back(State<T> s, State<T> start) {
-		Solution<T> sol = new Solution<T>();
+    protected Solution<T> back(State<T> s, State<T> start) {
+        Solution<T> sol = new Solution<T>();
 		while (!s.equals(start)) {
 			sol.addState(s);
 			s = s.getCameFrom();
 		}
 		return sol;
 	}
-
 }
+
+

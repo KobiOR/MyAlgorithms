@@ -28,7 +28,7 @@ public class BFS<T> extends CommonSearcher<T> {
 			closed.add(n);//2
 			if (n.equals(goal))//3
 			{
-				return back(n, s.getStartState());
+				return backTrace(n);
 			}
 			List<State<T>> successors = s.getAllPossibleStates(n); //4
 			s.setValue(n);

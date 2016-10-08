@@ -12,18 +12,20 @@ import mazeGenerators.SimpleMaze3dGenerator;
 import Run.Methods.*;
 
 import java.io.*;
+import java.util.Vector;
 
 import static Run.Methods.print;
 
 public class Demo {
 
     public static void run() {
+        Coordinate n = new Coordinate("(2,2,2)");
         SimpleMaze3dGenerator SMG = new SimpleMaze3dGenerator();
         GrowingTreeGenerator groTreeAlgo = new GrowingTreeGenerator();
-        Maze3d myMaze = myMaze = groTreeAlgo.Generate(3, 7, 9);
+        Maze3d myMaze = myMaze = groTreeAlgo.Generate(4, 7, 9);
 
         while (!SMG.verityPathOnMaze(myMaze)) {
-            myMaze = groTreeAlgo.Generate(3, 8, 9);
+            myMaze = groTreeAlgo.Generate(4, 8, 9);
         }
         myMaze.printMaze();
 
@@ -37,7 +39,6 @@ public class Demo {
         Solution<Coordinate> sol1 = s1.search(mz);// run the search method to get a solution
         System.out.println("BFS solution:\n" + sol1.toString());// print the solution
         System.out.println("The number of nodes evaluated: " + s1.getNumberOfNodesEvaluated() + "\n");// print the number of nodes evaluated
-
         try {
 
             OutputStream out = new MyCompressorOutputStream(new FileOutputStream("test.maz"));
