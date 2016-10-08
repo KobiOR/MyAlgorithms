@@ -9,12 +9,15 @@ import mazeGenerators.Coordinate;
 import mazeGenerators.GrowingTreeGenerator;
 import mazeGenerators.Maze3d;
 import mazeGenerators.SimpleMaze3dGenerator;
-import Run.Methods.*;
-
 import java.io.*;
-import java.util.Vector;
 
 import static Run.Methods.print;
+
+/**
+ * Demo class run BFS and DFS
+ *
+ * @throws IOException Iif needed
+ */
 
 public class Demo {
 

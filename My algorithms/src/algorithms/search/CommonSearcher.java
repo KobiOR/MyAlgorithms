@@ -1,9 +1,7 @@
 /**
- * COOMONSERACHER  CLASS
- * itarative algorithem
- * @param openList-a QUEUE FOR STATE<T>
- * @param closedList  this is the LIST for the algorithem-USE FOR KNOW WHO IS OUT&IN
- *
+ * The abstract class CommonSearcher<T> implements Searcher
+ *@param openList- PriorityQueue that old the Coordinate  through State objects
+ *@author Kobi Or 12/09/2016.
  */
 package algorithms.search;
 
@@ -14,13 +12,18 @@ public abstract class CommonSearcher<T> implements Searcher {
 	protected PriorityQueue<State<T>> openList;
 	protected int evaluatedNodes;
 
+	/**
+	 * @return evaluatedNodes (int type)-Counter
+	 */
 	@Override
-	    public int getNumberOfNodesEvaluated() {
+	public int getNumberOfNodesEvaluated() {
 		return evaluatedNodes;
 	}
 
-
-    protected Solution<T> backTrace(State<T> goalState) {
+	/**
+	 * @return Solution<T> object after do back trace from one coor' to a other coor' object
+	 */
+	protected Solution<T> backTrace(State<T> goalState) {
 		Solution<T> sol = new Solution<T>();
 		State<T> currState = goalState;
 		List<State<T>> states = sol.getStates();
@@ -31,9 +34,12 @@ public abstract class CommonSearcher<T> implements Searcher {
 		}
 
 			return sol;
-		}
+	}
 
-    protected Solution<T> back(State<T> s, State<T> start) {
+	/**
+	 * @return Solution<T> (OPPOSITE SOLUTION!!!) object after do back trace from one coor' to a other coor' object
+	 */
+	protected Solution<T> back(State<T> s, State<T> start) {
         Solution<T> sol = new Solution<T>();
 		while (!s.equals(start)) {
 			sol.addState(s);

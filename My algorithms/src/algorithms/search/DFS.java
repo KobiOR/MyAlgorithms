@@ -1,15 +1,9 @@
 /**
- * DFS CLASS
+ * The DFS class extends CommonSearcher<T> class ass Class that get Searchable object and return a solution
  * itarative algorithem
- * @param hashMap for print the nodes on the graph
- * @param st  this is the stack for the algorithem
- *
  */
 package algorithms.search;
-import mazeGenerators.Coordinate;
-
 import java.util.ArrayList;
-
 import java.util.*;
 
 /**
@@ -21,8 +15,12 @@ public class DFS<T> extends CommonSearcher<T> {
     private Random rand = new Random(); // create random number
     private List<State<T>> statesList = new ArrayList<State<T>>(); // list of solution stateT
     private List<State<T>> statesMade = new ArrayList<State<T>>(); // list of made states
+
+    /**
+     * @return Solution object after do back trace from one coor' to a other coor' object
+     */
     @Override
-    public Solution search(Searchable s) { // method to find solution for a search-able type using depth first search
+    public Solution<T> search(Searchable s) { // method to find solution for a search-able type using depth first search
         State<T> startState = s.getStartState();
         statesList.add(startState); // add the start state to the list
         statesMade.add(startState);
@@ -32,6 +30,9 @@ public class DFS<T> extends CommonSearcher<T> {
         return sol;
     }
 
+    /**
+     * The recurscive algo'
+     */
     private void DFS(State<T> currState, Searchable s) {
         while (!statesList.isEmpty()) {
 

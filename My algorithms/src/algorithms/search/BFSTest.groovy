@@ -1,3 +1,9 @@
+/**
+ * The BFSTest are check the BFS algorithm by setting negative values and end points values
+ *
+ * @param NoValues
+ * @author Kobi Or 02/09/2016.
+ */
 package algorithms.search
 
 import algorithem.Demo.MazeAdapter
@@ -7,6 +13,10 @@ import mazeGenerators.Maze3dGenerator
 
 
 class BFSTest {
+
+    /**
+     * Check BFS algorithem
+     */
     void testSearch() {
         BFS<Coordinate> BFSSearcher = new BFS<>();
         Maze3dGenerator mg = new GrowingTreeGenerator();

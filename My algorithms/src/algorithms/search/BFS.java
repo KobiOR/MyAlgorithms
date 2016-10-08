@@ -1,6 +1,16 @@
-package algorithms.search;
+/**
+ * The BFS class extends CommonSearcher<T> class ass Class that get Searchable object and return a solution
+ *
+ * @param NoValues
+ * @author Kobi Or 02/09/2016.
+ * @version 1.0
+ * @return Solution<T> OR double
+ * @exception No Throw
+ * @serial no Serial
+ * @see
+ */
 
-import java.util.ArrayList;
+package algorithms.search;
 import java.util.HashSet;
 import java.util.List;
 import java.util.PriorityQueue;
@@ -9,6 +19,10 @@ import java.util.PriorityQueue;
 public class BFS<T> extends CommonSearcher<T> {
 
 
+	/**
+	 *@param s get a Searchable Object and return a solution after start & finish BFS algorithm
+	 *@return Solution object
+	 */
 	@Override
 	public Solution<T> search(Searchable s) {
 		if (openList == null)
@@ -53,7 +67,10 @@ public class BFS<T> extends CommonSearcher<T> {
 		}
 		return sol;
 	}
-
+	/**
+	 *@param s get a State Object and return the time between the getCameFrom() object.increase it by one
+	 *@return double
+	 */
 	public double costCalculator(State<T> s) {
 		if (s.getCameFrom() == null)
 			return 0;
