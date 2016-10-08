@@ -16,26 +16,51 @@ public class State<T> implements Comparable<State<T>>
     public boolean isVisit() {
         return visit;
     }
-
     public void setVisit(boolean visit) {
         this.visit = visit;
     }
 
+	/**
+	 * @return state value
+	 */
 	public State<T> getCameFrom() {
 		return cameFrom;
 	}
+
+	/**
+	 * set the state we came from
+	 * @param cameFrom {@link State}
+	 */
 	public void setCameFrom(State<T> cameFrom) {
 		this.cameFrom = cameFrom;
 	}
+
+	/**
+	 * @return cost
+	 */
 	public double getCost() {
 		return cost;
 	}
+
+	/**
+	 * set the cost
+	 * @param cost
+	 */
 	public void setCost(double cost) {
 		this.cost = cost;
 	}
+
+	/**
+	 * @return state we came from
+	 */
 	public T getValue() {
 		return value;
 	}
+
+	/**
+	 *  set the value
+	 * @param value
+	 */
 	public void setValue(T value) {
 		this.value = value;
 	}
